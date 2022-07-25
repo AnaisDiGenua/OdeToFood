@@ -29,7 +29,7 @@ namespace OdeToFood.Pages.Restaurants
             //HttpContext.Request.QueryString;
 
             Message = config["Message"];
-            Restaurants = restaurantData.GetRestaurantByName(SearchTerm);
+            Restaurants = restaurantData.GetRestaurantsByName(SearchTerm);
         }
     }
 }
