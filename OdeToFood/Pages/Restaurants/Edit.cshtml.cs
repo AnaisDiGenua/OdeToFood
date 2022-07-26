@@ -12,6 +12,7 @@ namespace OdeToFood.Pages.Restaurants
         private readonly IHtmlHelper htmlHelper;
 
         //entità
+        [BindProperty]
         public Restaurant Restaurant { get; set; }
         public IEnumerable<SelectListItem> Cuisines { get; set; }
 
@@ -31,6 +32,22 @@ namespace OdeToFood.Pages.Restaurants
             //se il ristorante non esiste più
             if (Restaurant == null)
                 return RedirectToPage("./NotFound");
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        { 
+
+            if(ModelState.IsValid)
+            {
+                restaurantData.Update(Restaurant);
+                restaurantData.Commit();
+            }
+
+
+            //tramite questo tag helper prendo la lista di enum
+            Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
+
             return Page();
         }
     }
