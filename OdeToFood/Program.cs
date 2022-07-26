@@ -10,7 +10,9 @@ builder.Services.AddDbContext<OdeToFoodDbContext>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 //solo per development e tests
-builder.Services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+//builder.Services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+
+builder.Services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
 var app = builder.Build();
 
