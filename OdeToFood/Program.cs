@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Add DbContext
+builder.Services.AddDbContext<OdeToFoodDbContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
