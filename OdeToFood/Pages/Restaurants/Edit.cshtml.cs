@@ -42,6 +42,7 @@ namespace OdeToFood.Pages.Restaurants
             {
                 restaurantData.Update(Restaurant);
                 restaurantData.Commit();
+                return RedirectToPage("./Detail", new {RestaurantId = Restaurant.Id}); //simile a  laravel
             }
 
 
