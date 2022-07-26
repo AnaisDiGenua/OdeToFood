@@ -12,6 +12,7 @@ namespace OdeToFood.Data
         IEnumerable<Restaurant> GetRestaurantsByName(string name);
         Restaurant GetById(int id);
         Restaurant Update(Restaurant updatedRestaurant);
+        Restaurant Add(Restaurant newRestaurant);
         int Commit();
 
     }
@@ -35,9 +36,9 @@ namespace OdeToFood.Data
 
         public Restaurant GetById(int id)
         {
-            return restaurants.SingleOrDefault(x => x.Id == id); 
+            return restaurants.SingleOrDefault(x => x.Id == id);
         }
-        
+
         public IEnumerable<Restaurant> GetRestaurantsByName(string name = null)
         {
             return from r in restaurants
@@ -50,7 +51,7 @@ namespace OdeToFood.Data
         {
             var restaurant = restaurants.SingleOrDefault(x => x.Id == updatedRestaurant.Id);
 
-            if(restaurant != null)
+            if (restaurant != null)
             {
                 restaurant.Name = updatedRestaurant.Name;
                 restaurant.Location = updatedRestaurant.Location;
@@ -60,6 +61,13 @@ namespace OdeToFood.Data
             return restaurant;
         }
 
+        public Restaurant Add(Restaurant newRestaurant)
+        {
+            restaurants.Add(newRestaurant);
+            //genero un id per il mock
+            newRestaurant.Id = restaurants.Max(x => x.Id) + 1;
+            return newRestaurant;
+        }
 
         public int Commit()
         {

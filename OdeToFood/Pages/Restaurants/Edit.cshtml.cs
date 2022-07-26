@@ -21,13 +21,20 @@ namespace OdeToFood.Pages.Restaurants
             this.restaurantData = restaurantData;
             this.htmlHelper = htmlHelper;
         }
-        public IActionResult OnGet(int restaurantId)
+        public IActionResult OnGet(int? restaurantId)
         {
             //tramite questo tag helper prendo la lista di enum
             Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
 
-            //assoccio l'entità restaurant al ristorante scelto dall'utente tramite id
-            Restaurant = restaurantData.GetById(restaurantId);
+            if(restaurantId.HasValue)
+            {
+                //assoccio l'entità restaurant al ristorante scelto dall'utente tramite id
+                Restaurant = restaurantData.GetById(restaurantId.Value);
+            }
+            else
+            {
+                Restaurant = new Restaurant();
+            }
 
             //se il ristorante non esiste più
             if (Restaurant == null)
@@ -38,18 +45,27 @@ namespace OdeToFood.Pages.Restaurants
         public IActionResult OnPost()
         { 
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                restaurantData.Update(Restaurant);
-                restaurantData.Commit();
-                return RedirectToPage("./Detail", new {RestaurantId = Restaurant.Id}); //simile a  laravel
+                //tramite questo tag helper prendo la lista di enum
+                Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
+                return Page();
             }
 
+            if(Restaurant.Id > 0)
+            {
+                restaurantData.Update(Restaurant);
+            }
+            else
+            {
+                restaurantData.Add(Restaurant);
+            }
 
-            //tramite questo tag helper prendo la lista di enum
-            Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
+            restaurantData.Commit();
+            TempData["Message"] = "Restaurant saved!";
 
-            return Page();
+            return RedirectToPage("./Detail", new { RestaurantId = Restaurant.Id }); //simile a  laravel
+
         }
     }
 }
