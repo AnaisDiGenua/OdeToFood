@@ -1,0 +1,8 @@
+{
+  "name": "odetofood",
+  "version": "1.0.0",
+  "description": "OdeToFood",
+  "dependencies": {
+    "datatables.net-bs5": "^1.12.1"
+  }
+}
