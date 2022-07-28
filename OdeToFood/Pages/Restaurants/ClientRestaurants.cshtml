@@ -6,10 +6,18 @@
 
 <h2>Client Restaurants</h2>
 
+
+<table class="table" id="restaurants">
+
+
+</table>
+
+
 @section Scripts {
     <environment include="Development">
-
-
+        <script src="~/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+        <script src="~/node_modules/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+        <link href="~/node_modules/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         @*script che vengono caricati solo quando si visita questa pagina e quando sono in ambiente di produzione*@
@@ -21,10 +29,23 @@
     <script> 
         //chiamata ajax ad un api endpoint che ho creato con il backend
         $(function () {
+            //è possibile fare una chiamamata Api anzichè costruire l'array
+            var cuisines = ["Unknow", "Mexican", "Italian", "Indian"]
+
             $.ajax("/api/restaurants/", 
                     { method: "get"})
                     .then(function (response) {
-                        console.dir(response);
+                        $("#restaurants").dataTable({
+                            data: response,
+                            columns: [
+                                {"data" : "name"},
+                                {"data" : "location"},
+                                {"data" : "cuisine", "render" : function(data) {
+                                        return cuisines[data];
+                                    }
+                                }
+                            ]
+                        })
                     })
         });
 
