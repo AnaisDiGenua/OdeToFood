@@ -14,6 +14,12 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
+
+//per usare razor page e api controller
+builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,8 +34,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
+
+
+app.UseEndpoints(e =>
+{
+    e.MapControllers();
+
+});
 
 app.MapRazorPages();
 

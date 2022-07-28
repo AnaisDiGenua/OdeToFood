@@ -1,0 +1,22 @@
+﻿@page
+@model OdeToFood.Pages.Restaurants.ClientRestaurantsModel
+@{
+    ViewData["Title"] = "ClientRestaurants";
+}
+
+<h2>Client Restaurants</h2>
+
+@section Scripts {
+    @*sarebbe meglio fare un file js a parte*@
+    <script> 
+        //chiamata ajax ad un api endpoint che ho creato con il backend
+        $(function () {
+            $.ajax("/api/restaurants/", 
+                    { method: "get"})
+                    .then(function (response) {
+                        console.dir(response);
+                    })
+        });
+
+    </script>
+}
