@@ -29,8 +29,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.Use(SayHelloMiddleWare);
-
 
 //l'ordine dei processi che compie il middleware è importante!
 app.UseHttpsRedirection();

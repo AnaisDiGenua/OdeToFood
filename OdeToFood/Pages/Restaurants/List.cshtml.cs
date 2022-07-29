@@ -9,6 +9,7 @@ namespace OdeToFood.Pages.Restaurants
     {
         private readonly IConfiguration config;
         private readonly IRestaurantData restaurantData;
+        private readonly ILogger<ListModel> logger;
 
         public string Message { get; set; }
         public IEnumerable<Restaurant> Restaurants { get; set; }
@@ -17,10 +18,12 @@ namespace OdeToFood.Pages.Restaurants
         public string SearchTerm { get; set; }
 
         public ListModel(IConfiguration config, 
-                         IRestaurantData restaurantData)
+                         IRestaurantData restaurantData,
+                         ILogger<ListModel> logger)
         {
             this.config = config;
             this.restaurantData = restaurantData;
+            this.logger = logger;
         }
 
         //httpGet request
@@ -28,6 +31,7 @@ namespace OdeToFood.Pages.Restaurants
         {
             //HttpContext.Request.QueryString;
 
+            logger.LogError("Executing ListModel");
             Message = config["Message"];
             Restaurants = restaurantData.GetRestaurantsByName(SearchTerm);
         }
