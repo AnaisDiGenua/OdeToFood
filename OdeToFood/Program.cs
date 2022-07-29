@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Add DbContext
@@ -30,6 +29,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.Use(SayHelloMiddleWare);
+
+
+//l'ordine dei processi che compie il middleware è importante!
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseNodeModules();
@@ -41,9 +44,10 @@ app.UseAuthorization();
 app.UseEndpoints(e =>
 {
     e.MapControllers();
-
 });
 
 app.MapRazorPages();
 
 app.Run();
+
+
